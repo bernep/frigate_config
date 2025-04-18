@@ -1,0 +1,365 @@
+mqtt:
+  host: homeassistant.home.arpa  
+  port: 1883
+  user: louis
+  password: passwordman
+
+cameras:
+  front_door_closeup:
+    ffmpeg:
+      inputs:
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.101:554/Streaming/Channels/101
+          roles:
+            - record
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.101:554/Streaming/Channels/102
+          roles:
+            - detect
+      output_args:
+        record: -f segment -segment_time 60 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy
+    detect:
+      width: 640
+      height: 360
+      fps: 20
+    objects:
+      track:
+        - person
+        - car
+        - motorcycle
+        - bird
+        - cat
+        - dog
+        - horse
+        - sheep
+        - cow
+        - bear
+        - zebra
+        - giraffe
+        - elephant
+        - mouse
+      filters:
+        person:
+          mask: 570,299,545,0
+        cat:
+          min_score: 0.01
+          threshold: 0.02
+        dog:
+          min_score: 0.01
+          threshold: 0.02
+        bird:
+          min_score: 0.01
+          threshold: 0.02
+    motion:
+      mask:
+        - 473,0,21,156,53,317,140,312
+    record:
+      enabled: true
+      events:
+        pre_capture: 5
+        post_capture: 5
+        objects:
+          - person
+          - car
+          - motorcycle
+          - bird
+          - cat
+          - dog
+          - horse
+          - sheep
+          - cow
+          - bear
+          - zebra
+          - giraffe
+          - elephant
+          - mouse
+
+  driveway:
+    ffmpeg:
+      inputs:
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.102:554/Streaming/Channels/101
+          roles:
+            - record
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.102:554/Streaming/Channels/102
+          roles:
+            - detect
+      output_args:
+        record: -f segment -segment_time 60 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy
+    detect:
+      width: 640
+      height: 360
+      fps: 20
+    objects:
+      track:
+        - person
+        - car
+        - motorcycle
+        - bird
+        - cat
+        - dog
+        - horse
+        - sheep
+        - cow
+        - bear
+        - zebra
+        - giraffe
+        - elephant
+        - mouse
+      filters:
+        car:
+          min_score: 0.01
+          threshold: 0.03
+        cat:
+          min_score: 0.01
+          threshold: 0.02
+        dog:
+          min_score: 0.01
+          threshold: 0.02
+        bird:
+          min_score: 0.01
+          threshold: 0.02
+    record:
+      enabled: true
+      events:
+        pre_capture: 5
+        post_capture: 5
+        objects:
+          - person
+          - car
+          - motorcycle
+          - bird
+          - cat
+          - dog
+          - horse
+          - sheep
+          - cow
+          - bear
+          - zebra
+          - giraffe
+          - elephant
+          - mouse
+
+  side_door_closeup:
+    ffmpeg:
+      inputs:
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.104:554/Streaming/Channels/101
+          roles:
+            - record
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.104:554/Streaming/Channels/102
+          roles:
+            - detect
+      output_args:
+        record: -f segment -segment_time 60 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy
+    detect:
+      width: 640
+      height: 360
+      fps: 20
+    objects:
+      track:
+        - person
+        - bird
+        - cat
+        - dog
+        - horse
+        - sheep
+        - cow
+        - bear
+        - zebra
+        - giraffe
+        - elephant
+        - mouse
+      filters:
+        car:
+          min_score: 0.01
+          threshold: 0.03
+        cat:
+          min_score: 0.01
+          threshold: 0.02
+        dog:
+          min_score: 0.01
+          threshold: 0.02
+        bird:
+          min_score: 0.70
+          threshold: 0.75
+    record:
+      enabled: true
+      events:
+        pre_capture: 5
+        post_capture: 5
+        objects:
+          - person
+          - car
+          - bird
+          - cat
+          - dog
+          - horse
+          - sheep
+          - cow
+          - bear
+          - zebra
+          - giraffe
+          - elephant
+          - mouse
+
+  back_door_closeup:
+    ffmpeg:
+      inputs:
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.103:554/Streaming/Channels/101
+          roles:
+            - record
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.103:554/Streaming/Channels/102
+          roles:
+            - detect
+      output_args:
+        record: -f segment -segment_time 60 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy
+    detect:
+      width: 640
+      height: 360
+      fps: 20
+    objects:
+      track:
+        - person
+        - car
+        - bird
+        - cat
+        - dog
+        - horse
+        - sheep
+        - cow
+        - bear
+        - zebra
+        - giraffe
+        - elephant
+        - mouse
+      filters:
+        car:
+          min_score: 0.75
+          threshold: 0.75
+        cat:
+          min_score: 0.01
+          threshold: 0.02
+        dog:
+          min_score: 0.01
+          threshold: 0.02
+        bird:
+          min_score: 0.01
+          threshold: 0.02
+    record:
+      enabled: true
+      events:
+        pre_capture: 5
+        post_capture: 5
+        objects:
+          - person
+          - car
+          - bird
+          - cat
+          - dog
+          - horse
+          - sheep
+          - cow
+          - bear
+          - zebra
+          - giraffe
+          - elephant
+          - mouse
+
+  front_porch_wide_angle:
+    ffmpeg:
+      inputs:
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.106:554/Streaming/Channels/101
+          roles:
+            - record
+        - path: rtsp://CAMERAUSERNAMEGOESHERE:CAMERAPASSWORDGOESHERE@192.168.3.106:554/Streaming/Channels/102
+          roles:
+            - detect
+      output_args:
+        record: -f segment -segment_time 60 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy
+    detect:
+      width: 640
+      height: 360
+      fps: 20
+    objects:
+      track:
+        - person
+        - car
+        - motorcycle
+        - bird
+        - cat
+        - dog
+        - horse
+        - sheep
+        - cow
+        - bear
+        - zebra
+        - giraffe
+        - elephant
+        - mouse
+      filters:
+        person:
+          min_score: 0.8
+          threshold: 0.8
+        car:
+          min_score: 0.6
+          threshold: 0.7
+        cat:
+          min_score: 0.01
+          threshold: 0.02
+        dog:
+          min_score: 0.01
+          threshold: 0.02
+        bird:
+          min_score: 0.6
+          threshold: 0.65
+    record:
+      enabled: true
+      events:
+        pre_capture: 5
+        post_capture: 5
+        objects:
+          - person
+          - car
+          - motorcycle
+          - bird
+          - cat
+          - dog
+          - horse
+          - sheep
+          - cow
+          - bear
+          - zebra
+          - giraffe
+          - elephant
+          - mouse
+
+  fishcam:
+    ffmpeg:
+      inputs:
+        - path: rtsp://louis:passwordroflcopter@192.168.3.120:554/stream1
+          roles:
+            - record
+        - path: rtsp://louis:passwordroflcopter@192.168.3.120:554/stream1
+          roles:
+            - detect
+      output_args:
+        record: -f segment -segment_time 60 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy
+    detect:
+      width: 640
+      height: 360
+      fps: 20
+    objects:
+      track:
+        - person
+      filters:
+        person:
+          min_score: 0.3
+          threshold: 0.3
+    record:
+      enabled: true
+      events:
+        pre_capture: 15
+        post_capture: 15
+        objects:
+          - fish
+
+database:
+  path: /data/db/frigate.db
+#version: 0.14
