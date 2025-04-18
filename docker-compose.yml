@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  frigate:
+    container_name: frigate
+    privileged: true # This may not be necessary for all setups
+    restart: unless-stopped
+    image: ghcr.io/blakeblackshear/frigate:0.13.2 # Last good version
+    shm_size: "64mb" # Update for your cameras based on requirements
+    devices:
+      - /dev/bus/usb:/dev/bus/usb # USB Coral, modify for other hardware
+      - /dev/apex_0:/dev/apex_0 # PCIe Coral, modify based on your setup
+      - /dev/video11:/dev/video11 # For Raspberry Pi 4B
+      - /dev/dri/renderD128:/dev/dri/renderD128 # Intel hwaccel, update for your hardware
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config:/config
+      - ./storage:/media/frigate
+      - ./database:/data/db
+      - type: tmpfs # Optional: Reduces SSD wear
+        target: /tmp/cache
+        tmpfs:
+          size: 1000000000
+    ports:
+      - "8971:8971"
+      - "5000:5000" # Internal unauthenticated access. Be careful with exposure.
+      - "8554:8554" # RTSP feeds
+      - "8555:8555/tcp" # WebRTC over TCP
+      - "8555:8555/udp" # WebRTC over UDP
+    environment:
+      FRIGATE_RTSP_PASSWORD: "password"
